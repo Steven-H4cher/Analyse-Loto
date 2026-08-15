@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Registre des Tirages — Analyseur 01–90</title>
+<meta name="description" content="Analyse locale des tirages de loterie 01–90 : fréquences, paires et lots. Aucune donnée envoyée en ligne." />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <div class="badge">1–90</div>
+        <div>
+          <h1 class="title">REGISTRE DES TIRAGES</h1>
+          <p class="subtitle">Fréquences, paires &amp; lots — analyse locale, aucune donnée envoyée en ligne</p>
+        </div>
+      </div>
+      <label class="upload-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Charger un fichier .xlsx
+        <input id="file-input" type="file" accept=".xlsx,.xls" />
+      </label>
+    </header>
+
+    <!-- ERROR -->
+    <div id="error-box" class="error-box" hidden>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div id="error-text"></div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="empty-state" class="empty-state">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v13h13"/><path d="M8 21V3h13v13"/></svg>
+      <div class="empty-title">Aucun fichier chargé</div>
+      <div class="empty-text">
+        Charge un fichier Excel contenant une colonne "Résultats" avec des tirages
+        du type <code>34-17-76-88-30</code>.
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results" hidden>
+      <div id="file-label" class="file-label"></div>
+
+      <div id="stats-bar" class="stats-bar"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="freq">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Fréquences
+        </button>
+        <button class="tab-btn" data-tab="pairs">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+          Paires
+        </button>
+        <button class="tab-btn" data-tab="lots">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Lots
+        </button>
+      </div>
+
+      <div class="panel">
+        <div id="tab-freq" class="tab-content"></div>
+        <div id="tab-pairs" class="tab-content" hidden></div>
+        <div id="tab-lots" class="tab-content" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
