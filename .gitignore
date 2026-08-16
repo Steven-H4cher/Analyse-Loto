@@ -1,3 +1,5 @@
 node_modules/
 *.xlsx
 *.xls
+.netlify/
+_netlify_publish/

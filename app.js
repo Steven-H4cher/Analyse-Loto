@@ -206,9 +206,9 @@ function ballClass(count) {
 function ballStyle(count, maxFreq) {
   if (count === 0) return "";
   const ratio = maxFreq > 0 ? count / maxFreq : 0;
-  const alpha = (0.18 + ratio * 0.72).toFixed(2);
-  const textColor = ratio > 0.45 ? "#FBECEA" : "#1B2A3D";
-  return `background: rgba(181, 52, 42, ${alpha}); color: ${textColor};`;
+  if (ratio >= 0.66) return "background:#C45C26;color:#fff;";
+  if (ratio >= 0.33) return "background:#D4A017;color:#1A140C;";
+  return "background:#FFF8EC;color:#1A140C;";
 }
 
 function renderFreq(a) {
@@ -285,10 +285,8 @@ function renderPairs(a) {
   `;
 }
 
-function lotBarColor(count, maxCount) {
-  const ratio = maxCount > 0 ? count / maxCount : 0;
-  const alpha = (0.2 + ratio * 0.7).toFixed(2);
-  return `rgba(168, 123, 30, ${alpha})`;
+function lotBarColor() {
+  return "#C45C26";
 }
 
 function renderLots(a) {
@@ -375,6 +373,10 @@ const tabContents = {
   lots: tabLots,
 };
 
+if (!fileInput || !errorBox || !emptyState || !results) {
+  console.error("Éléments HTML manquants — la page ne peut pas s'initialiser.");
+}
+
 function showError(message) {
   errorText.textContent = message;
   errorBox.hidden = false;
@@ -397,7 +399,8 @@ tabButtons.forEach((btn) => {
   btn.addEventListener("click", () => switchTab(btn.dataset.tab));
 });
 
-fileInput.addEventListener("change", (e) => {
+
+fileInput?.addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
   clearError();
@@ -408,7 +411,7 @@ fileInput.addEventListener("change", (e) => {
       const draws = parseWorkbook(evt.target.result);
       const analysis = computeAnalysis(draws);
 
-      fileLabel.textContent = `FICHIER : ${file.name}`;
+      fileLabel.textContent = `FICHIER · ${file.name}`;
       statsBar.innerHTML = renderStatsBar(analysis);
       tabFreq.innerHTML = renderFreq(analysis);
       tabPairs.innerHTML = renderPairs(analysis);
